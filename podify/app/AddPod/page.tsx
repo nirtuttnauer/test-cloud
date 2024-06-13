@@ -37,7 +37,7 @@ export default function AddPod() {
 
   async function onSubmit(values: z.infer<typeof podcastEpisodeSchema>) {
     try {
-      const response = await axios.post('/api/podcast-episodes', values);
+      const response = await axios.post('/api/podcast-episodes', values).then((res: any) => res.data).catch((err: any) => console.log(err.response.data));
       console.log("Podcast episode created successfully:", response.data);
       // You can add additional logic to handle the success case
     } catch (error) {
