@@ -25,17 +25,17 @@ export default function Home() {
       .then((response) => response.json())
       .then((data) => {
         console.log("Fetched data:", data); // Check what the data looks like
-        if (data && Array.isArray(data.items)) {
+        if (Array.isArray(data)) {
           try {
             // Validate each item in the data array
-            const validEpisodes = data.items.map((item: any) => podcastEpisodeSchema.parse(item));
-            setEpisodes(validEpisodes); // Use the 'items' array for episodes
+            const validEpisodes = data.map((item: any) => podcastEpisodeSchema.parse(item));
+            setEpisodes(validEpisodes); // Use the fetched data array for episodes
             setFilteredEpisodes(validEpisodes); // Initialize filtered episodes with fetched data
           } catch (e) {
             console.error("Validation error:", e);
           }
         } else {
-          console.error("Fetched data does not contain an array of items:", data);
+          console.error("Fetched data is not an array:", data);
         }
       })
       .catch((error) => console.error("Error fetching episodes:", error));
